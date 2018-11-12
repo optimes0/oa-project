@@ -22,12 +22,12 @@ public class SecurityServiceImpl implements SecurityService {
 	private IdentityService identityService;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
 		//到数据库里根据登录名查找用户信息
-		Optional<User> op = this.identityService.findByLoginName(username);
+		Optional<User> op = this.identityService.findByLoginName(loginName);
 		//没有user则抛出异常
 		User user = op.orElseThrow(()->{
-			return new UsernameNotFoundException("用户的登录名"+ username + "没有找到");
+			return new UsernameNotFoundException("用户的登录名"+ loginName + "没有找到");
 		});
 		
 		Collection<GrantedAuthority> authority = new HashSet<>();
@@ -38,8 +38,6 @@ public class SecurityServiceImpl implements SecurityService {
 			GrantedAuthority ga = new SimpleGrantedAuthority("ROLE_"+role.getRoleKey());
 			authority.add(ga);
 		});
-		Exception ex = new Exception();
-		ex.printStackTrace();
 		UserDetails ud = new UserDetails(user, authority);
 		return ud;
 	}

@@ -33,7 +33,7 @@ public class LayoutConfig implements WebMvcConfigurer{
 			//激活使用
 			bean.setEnabled(true);
 			//只处理来自浏览器的请求，其他不处理
-			bean.setDispatcherTypes(DispatcherType.REQUEST);
+			bean.setDispatcherTypes(DispatcherType.REQUEST,DispatcherType.ERROR);
 			
 			//初始化过滤参数
 			Map<String, String> initParameters = new HashMap<>();

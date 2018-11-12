@@ -9,7 +9,7 @@ $(function(){
 		
 		//获取当前用户的菜单并显示出来
 		$.ajax({
-			url:  "/menu/menus",
+			url: "/menu/menus",
 			method: "GET",
 			dataType: "JSON",
 			success: function(menus,status,xhr){

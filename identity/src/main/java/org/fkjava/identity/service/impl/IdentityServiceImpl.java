@@ -185,7 +185,7 @@ public class IdentityServiceImpl implements IdentityService {
 	@Override
 	public Optional<User> findByLoginName(String username) {
 		User user = this.userDao.findByLoginName(username);
-		Optional<User> op = Optional.ofNullable(null);
+		Optional<User> op = Optional.ofNullable(user);
 		return op;
 	}
 

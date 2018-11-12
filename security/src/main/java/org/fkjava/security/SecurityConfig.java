@@ -21,17 +21,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()//验证请求
-			.antMatchers("/security/login","/css/**","/js/**","/webjars/**","/static/**"
-					,"/identity/user/add")
+			.antMatchers("/security/login","/css/**","/js/**","/webjars/**","/static/**")
 			.permitAll()//不做访问判断
 			.anyRequest()//所有请求
 			.authenticated()//授权后才能访问
 			.and()//并且
 			.formLogin()//使用表单登录
 			.loginPage("/security/login")//登录页面位置，默认是/login
-			.loginProcessingUrl("/security/do")//处理登录请求的url
+			.loginProcessingUrl("/security/do-login")//处理登录请求的url
 			.usernameParameter("loginName")//登录名的参数名
 			.passwordParameter("password")//登录密码的参数名
+			//.and().httpBasic();
 			.and().csrf();//启用防跨站攻击
 		
 	}
