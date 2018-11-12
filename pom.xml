@@ -38,5 +38,6 @@
 		<module>commons</module>
 		<module>identity</module>
 		<module>menu</module>
+		<module>layout</module>
 	</modules>
 </project>

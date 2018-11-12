@@ -59,4 +59,12 @@ public class MenuController {
 	public Result remove(@PathVariable("id")String id) {
 		return this.menuService.remove(id);
 	}
+	
+	@GetMapping(path="menus", produces="application/JSON")
+	@ResponseBody
+	public List<Menu> findMyMenu(){
+		//找到当前用户的菜单
+		//TODO 暂时没有用户，先直接查询所有
+		return this.menuService.findTopMenus();
+	}
 }

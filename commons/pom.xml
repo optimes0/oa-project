@@ -13,5 +13,6 @@
   <modules>
   	<module>commons-config</module>
   	<module>resources</module>
+  	<module>data</module>
   </modules>
 </project>
