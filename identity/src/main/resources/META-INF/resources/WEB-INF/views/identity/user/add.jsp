@@ -91,6 +91,9 @@
 				  		</div>
 				  	</div>
 				  </div>
+				  <input type="hidden"
+					name="${_csrf.parameterName}"
+					value="${_csrf.token}"/>
 				  <button type="submit" class="btn btn-default">${empty user ? '添加' : '修改' }</button>
 				</form>
 			</div>

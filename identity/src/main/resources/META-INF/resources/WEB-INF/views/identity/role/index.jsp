@@ -61,7 +61,9 @@
 				    		name="roleKey" placeholder="请输入角色KEY"
 				    		required="required">
 				  </div>
-				  
+				  <input type="hidden"
+						name="${_csrf.parameterName}"
+						value="${_csrf.token}"/>
 				  <button id="submit" class="btn btn-default">新增</button>
 				  <button id="alter" style="display: none;" class="btn btn-default">修改</button>
 				</form>

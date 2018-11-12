@@ -5,17 +5,22 @@
     <artifactId>oa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>layout</artifactId>
-  <description>页面总体布局，根据权限生成菜单</description>
+  <artifactId>security</artifactId>
   
   <dependencies>
-  		<dependency>
-  			<groupId>org.fkjava</groupId>
-  			<artifactId>menu</artifactId>
-  			<version>${project.version}</version>
-  		</dependency>
-  		
-  		<!-- 加入Servlet API的依赖 -->
+		<!-- 增加统一的布局模块 -->
+		<dependency>
+			<groupId>org.fkjava</groupId>
+			<artifactId>layout</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+ 		<!-- 使用页面装饰器，对所有的页面增加相应的装饰效果 -->
+		<dependency>
+			<groupId>org.sitemesh</groupId>
+			<artifactId>sitemesh</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+ 		<!-- 加入Servlet API的依赖 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -39,24 +44,5 @@
 			<!-- 可选的，必须设置为true，才能实现热部署 -->
 			<optional>true</optional>
 		</dependency>
-		
-		<!-- 使用页面装饰器，对所有的页面增加相应的装饰效果 -->
-		<dependency>
-			<groupId>org.sitemesh</groupId>
-			<artifactId>sitemesh</artifactId>
-			<version>3.0.1</version>
-		</dependency>
-		
-		<!-- Spring Boot自动配置Spring Security -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<!-- 加入Spring Security的单元测试框架，方便进行安全测试 -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-  </dependencies>
+	</dependencies>
 </project>

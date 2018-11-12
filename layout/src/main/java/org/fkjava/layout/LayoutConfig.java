@@ -40,7 +40,7 @@ public class LayoutConfig implements WebMvcConfigurer{
 			//当是/*的请求时，使用/WEB-INF/layouts/main.jsp来装饰
 			//当是/admin/*的请求时，使用/WEB-INF/layouts/admin.jsp来装饰
 			initParameters.put("decoratorMappings", "/*=/WEB-INF/layouts/main.jsp\n"
-					+ "/admin/*=/WEB-INF/layouts/admin.jsp");
+					+ "/security/login=/WEB-INF/layouts/simple.jsp");
 			
 			bean.setInitParameters(initParameters);
 			return bean;

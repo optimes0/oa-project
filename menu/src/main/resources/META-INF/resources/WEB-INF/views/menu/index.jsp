@@ -122,6 +122,9 @@
 						<button class="btn btn-default reset-button" type="button">重置</button>
 						<button class="btn btn-primary">保存</button>
 				  </div>
+				  <input type="hidden"
+					name="${_csrf.parameterName}"
+					value="${_csrf.token}"/>
 				</form>
 			</div>
 		</div> 
