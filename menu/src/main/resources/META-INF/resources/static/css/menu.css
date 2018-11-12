@@ -1,0 +1,35 @@
+@charset "UTF-8";
+.roles
+{
+	border: 1px solid #eee;
+	height:200px;
+	overflow-y: scroll; 
+}
+
+.roles ul
+{
+	padding-inline-start: 5px;
+}
+.roles li
+{
+	list-style: none;
+}
+
+.menu-form
+{
+	border-left: 1px solid #eee;
+}
+
+.tree-container {
+	height: 400px;
+	overflow: auto;
+	border-right: 1px solid #ddd;
+}
+
+.ztree li span.button.add {
+	margin-left: 2px;
+	margin-right: -1px;
+	background-position: -144px 0px;
+	vertical-align: top;
+	*vertical-align: middle
+}

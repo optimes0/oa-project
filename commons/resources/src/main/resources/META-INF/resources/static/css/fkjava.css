@@ -1,0 +1,9 @@
+@charset "UTF-8";
+.panel-heading
+{
+	padding-top: 25px;
+}
+.headText
+{
+	margin-top: -15px;
+}

@@ -1,0 +1,20 @@
+@charset "UTF-8";
+.roles
+{
+	border: 1px solid #eee;
+	height:200px;
+	overflow-y: scroll; 
+}
+.select-button
+{
+	padding-left: 0px;
+}
+
+.roles ul
+{
+	padding-inline-start: 5px;
+}
+.roles li
+{
+	list-style: none;
+}

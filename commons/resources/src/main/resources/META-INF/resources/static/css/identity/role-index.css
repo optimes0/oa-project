@@ -1,0 +1,17 @@
+@charset "UTF-8";
+.role:hover
+{
+	background: #aaa;
+	cursor: pointer;
+}
+
+.role-form
+{
+	border-left: 1px solid #eee;
+	padding-bottom: 10px;
+}
+
+.role-select
+{
+	background: #aaa;
+}
