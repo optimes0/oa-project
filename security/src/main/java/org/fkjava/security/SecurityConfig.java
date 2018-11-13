@@ -40,6 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 			.loginProcessingUrl("/security/do-login")//处理登录请求的url
 			.usernameParameter("loginName")//登录名的参数名
 			.passwordParameter("password")//登录密码的参数名
+			.and().logout()//配置登出
+			.logoutUrl("/security/do-logout")//登出的url
 			//.and().httpBasic();
 			.and().csrf();//启用防跨站攻击
 		
@@ -55,6 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 		//动态注册URL和视图的映射关闭，解决控制器里几乎没有代码的问题
 		registry.addViewController("/security/login")
 				.setViewName("security/login");
+		
+		//设置首页
+		registry.addViewController("/").setViewName("security/index");
+		
 	}
 
 	public static void main(String[] args) {

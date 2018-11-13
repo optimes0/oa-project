@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,10 @@
 
 </head>
 <body>
-	<div class="col-sm-12 col-md-6 col-md-offset-4 text-center">
+	<div class="col-sm-12 col-md-6 col-md-offset-4 text-center" style="top: 100px;">
+		<c:if test="${param.logout eq '' }">
+			<div class="alert alert-success" role="alert" style="width: 60%" >成功退出登录</div>
+		</c:if>
 		<form class="form-signin" style="width: 60%" 
 				action="/security/do-login" method="post"/>
 		    <h2 class="form-signin-heading">请登录</h2>

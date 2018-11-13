@@ -44,7 +44,13 @@
             <li><a href="#">设置</a></li>
             <li><a href="#">个人</a></li>
             <li><a href="#">帮助</a></li>
+            <li><a href="#" onclick="$('#logout').submit()">退出</a></li>
           </ul>
+          <form id="logout" action="${ctx }/security/do-logout" method="post" style="display: none">
+       		 <input type="hidden"
+				name="${_csrf.parameterName}"
+				value="${_csrf.token}"/>
+          </form>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
           </form>
