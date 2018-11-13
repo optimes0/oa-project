@@ -15,4 +15,6 @@ public interface MenuService {
 
 	Result remove(String id);
 
+	List<Menu> findMyMenus();
+
 }

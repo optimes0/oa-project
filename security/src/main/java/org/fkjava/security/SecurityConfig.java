@@ -1,5 +1,6 @@
 package org.fkjava.security;
 
+import org.fkjava.security.interceptor.UserHolderInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.WebSecurityEnablerConfiguration;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -15,9 +17,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan("org.fkjava")
 @EnableJpaRepositories
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer{
-		
 	
 	
+	
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		//把拦截器添加进spring里面，拦截根目录以及根目录下的子目录
+		registry.addInterceptor(new UserHolderInterceptor()).addPathPatterns("/**");
+	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()//验证请求

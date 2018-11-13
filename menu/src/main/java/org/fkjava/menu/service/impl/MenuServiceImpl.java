@@ -1,16 +1,22 @@
 package org.fkjava.menu.service.impl;
 
 
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
 
 import org.fkjava.commons.data.domain.Result;
 import org.fkjava.identity.domain.Role;
+import org.fkjava.identity.domain.User;
 import org.fkjava.identity.repository.RoleDao;
+import org.fkjava.identity.repository.UserDao;
+import org.fkjava.identity.util.UserHolder;
 import org.fkjava.menu.domain.Menu;
 import org.fkjava.menu.repository.MenuDao;
 import org.fkjava.menu.service.MenuService;
@@ -31,6 +37,9 @@ public class MenuServiceImpl implements MenuService{
 	private MenuDao menuDao;
 	@Autowired
 	private RoleDao roleDao;
+	@Autowired
+	private UserDao userDao;
+	
 	/***
 	 * 保存菜单
 	 */
@@ -196,5 +205,89 @@ public class MenuServiceImpl implements MenuService{
 		}
 		return Result.ok();
 	}
+	
+	/***
+	 * 根据角色权限查找对应的菜单
+	 */
+	@Override
+	public List<Menu> findMyMenus() {
+		//从线程里得到User不是持久化的
+		User user = UserHolder.get();
+		//根据id查找持久化的User
+		user = this.userDao.getOne(user.getId());
+		//得到所有的角色
+		List<Role> roles = user.getRoles();
+		
+		//根据角色查找菜单
+		List<Menu> menus = this.menuDao.findDistinctByRolesIn(roles);
+		//准备返回的一级菜单
+		List<Menu> topMenus = new LinkedList<>();
+		//循环所有的二级以下菜单并准备一个map集合
+		Map<Menu, List<Menu>> map = new HashMap<>();
+		menus.stream()
+				.filter(menu -> menu.getParent() != null)
+				.forEach(menu -> {
+					//得到上级
+					Menu parent = menu.getParent();
+					if(!map.containsKey(parent)) {
+						//如果map里面没有parent则设放进去
+						map.put(parent, new LinkedList<>());
+					}
+					//获取子级
+					List<Menu> childs = map.get(parent);
+					//把子级菜单加入上级菜单里
+					childs.add(menu);
+				});
+		
+		//在内存里面对map进行排序
+		Comparator<Menu> comparator = (menu1,menu2) -> {
+			if(menu1.getNumber() > menu2.getNumber()) {
+				return 1;
+			}else if(menu1.getNumber() < menu2.getNumber()) {
+				return -1;
+			}else {
+				return 0;
+			}
+		};
+		//构建新的一级菜单，并且把二级菜单加入一级菜单里
+		map.entrySet().stream()
+					.filter(entry -> entry.getKey().getParent() == null)
+					.forEach(entry -> {
+						//一级
+						Menu parent = entry.getKey();
+						//二级
+						List<Menu> childs = entry.getValue();
+						
+						//查询得到的是持久化对象，不要修改，直接new一个用于保存数据
+						Menu menu = this.copy(parent);
+						//循环二级菜单
+						childs.forEach(child -> {
+							//把二级菜单加入一级菜单中
+							Menu subMenu = this.copy(child);
+							menu.getChilds().add(subMenu);
+						});
+						//排序二级菜单
+						menu.getChilds().sort(comparator);
+						//把一级菜单加入到集合里
+						topMenus.add(menu);
+					});
+		//给一级菜单排序
+		topMenus.sort(comparator);
+		return topMenus;
+	}
 
+	/***
+	 * 把持久化数据转换为瞬态数据
+	 * @param persist
+	 * @return
+	 */
+	private Menu copy(Menu persist) {
+		Menu menu = new Menu();
+		menu.setId(persist.getId());
+		menu.setName(persist.getName());
+		menu.setNumber(persist.getNumber());
+		menu.setUrl(persist.getUrl());
+		menu.setChilds(new LinkedList<>());
+		return menu;
+	}
 }

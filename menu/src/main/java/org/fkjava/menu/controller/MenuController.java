@@ -65,6 +65,6 @@ public class MenuController {
 	public List<Menu> findMyMenu(){
 		//找到当前用户的菜单
 		//TODO 暂时没有用户，先直接查询所有
-		return this.menuService.findTopMenus();
+		return this.menuService.findMyMenus();
 	}
 }

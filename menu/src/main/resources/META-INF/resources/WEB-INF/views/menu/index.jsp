@@ -14,7 +14,7 @@
 <script type="text/javascript" src="${ctx }/zTree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="${ctx }/static/js/menu.js"></script>
 <link rel="stylesheet" href="${ctx }/static/css/menu.css"/>
-<script type="text/javascript" src="${ctx }/static/js/identity/role-index.js"></script>
+<script type="text/javascript" src="${ctx }/static/js/identity/user-add.js"></script>
 </head>
 <body>
 <div class="container-fluid">
