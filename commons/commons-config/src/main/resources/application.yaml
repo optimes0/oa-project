@@ -26,5 +26,8 @@ spring:
         # 如果EntityManager被关闭，页面上肯定不能使用懒加载从数据库加载关联数据
         openInView: true
 
+    #自定义错误信息的国际化配置
+    message:
+        basename: org.fkjava.security.messages
          
         

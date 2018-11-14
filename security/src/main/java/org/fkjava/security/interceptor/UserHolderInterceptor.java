@@ -15,6 +15,10 @@ public class UserHolderInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		if(SecurityContextHolder.getContext().getAuthentication() == null) {
+			return true;
+		}
+		
 		//Authentication是认证的意思，Principal是首要的
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if(principal instanceof UserDetails) {
