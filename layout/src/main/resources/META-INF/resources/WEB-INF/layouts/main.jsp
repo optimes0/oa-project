@@ -42,7 +42,8 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">首页</a></li>
             <li><a href="#">设置</a></li>
-            <li><a href="#">个人</a></li>
+            <!-- authentication认证的意思，principal首要的意思 -->
+            <li><a href="#">${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.principal.name }</a></li>
             <li><a href="#">帮助</a></li>
             <li><a href="#" onclick="$('#logout').submit()">退出</a></li>
           </ul>

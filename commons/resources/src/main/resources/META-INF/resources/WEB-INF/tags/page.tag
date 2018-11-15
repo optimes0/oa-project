@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" scope="application"></c:set>
 <%@ attribute name="page" required="true" type="org.springframework.data.domain.Page" %>
-
+<c:if test="${not empty page }">
 <nav aria-label="分页导航" style="text-align: center;">
   <ul class="pagination">
     <li>
@@ -41,3 +41,7 @@
     </li>
   </ul>
 </nav>
+</c:if>
+<c:if test="${empty page }">
+没有数据
+</c:if>
