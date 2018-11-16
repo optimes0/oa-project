@@ -4,6 +4,10 @@ spring:
         view:
             prefix: /WEB-INF/views/
             suffix: .jsp
+    
+    #配置上传的文件大小
+    servlet.multipart:
+        maxFileSize: 10MB
         
     #数据源的配置
     datasource:

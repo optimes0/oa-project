@@ -40,5 +40,6 @@
 		<module>menu</module>
 		<module>layout</module>
 		<module>security</module>
+		<module>storage</module>
 	</modules>
 </project>
