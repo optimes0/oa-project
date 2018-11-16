@@ -62,7 +62,7 @@
 			  </tbody>
 			</table>
 			<%--前缀随意写要与tag指令的前缀相同，后缀要与文件名相同 --%>
-			<fk:page page="${page }"/>
+			<fk:page url="/identity/user?keyword=${param.keyword }" page="${page }"/>
 		  </div>
 	</div>
 </div>

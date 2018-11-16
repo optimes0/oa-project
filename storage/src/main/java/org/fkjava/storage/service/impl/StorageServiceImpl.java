@@ -65,7 +65,7 @@ public class StorageServiceImpl implements StorageService{
 		if(StringUtils.isEmpty(keyword)) {
 			keyword = null;
 		}
-		Pageable pageable = PageRequest.of(0, 5);
+		Pageable pageable = PageRequest.of(number, 5);
 		Page<FileInfo> page;
 		if(keyword == null) {
 			page = this.storageRepository.findByOwner(user,pageable);

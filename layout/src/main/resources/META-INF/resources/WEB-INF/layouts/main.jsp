@@ -52,8 +52,8 @@
 				name="${_csrf.parameterName}"
 				value="${_csrf.token}"/>
           </form>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
+          <form class="navbar-form navbar-right" method="get" action="">
+            <input type="text" class="form-control" placeholder="输入关键字,按回车搜索" name="keyword" vale="${param.keyword }">
           </form>
         </div>
       </div>
