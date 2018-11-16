@@ -41,7 +41,10 @@
 			  			<td>${f.contentType }</td>
 			  			<td>${f.fileSize }</td>
 			  			<td>${f.uploadTime }
-			  			<td>下载/删除</td>
+			  			<td>
+			  				<a href="${ctx }/storage/file/${f.id}" class="btn btn-success">下载</a>
+			  				<a href="javascript:deleteFile('${f.id}')" class="btn btn-danger">删除</a>
+			  			</td>
 			  		</tr>
 			  	</c:forEach>
 			  </tbody>
@@ -79,5 +82,19 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script type="text/javascript">
+function deleteFile(id){
+	$.ajax({
+		url: "${ctx}/storage/file/" + id,
+		method: "DELETE",
+		success: function(){
+			// 重新加载页面
+			window.location.reload();
+			//window.location.href = "${ctx}/storage/file";
+			// 还可以根据id删除一行记录
+		}
+	});
+}
+</script>
 </body>
 </html>

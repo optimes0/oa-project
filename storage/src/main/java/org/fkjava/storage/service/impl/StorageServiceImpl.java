@@ -1,6 +1,8 @@
 package org.fkjava.storage.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -8,6 +10,7 @@ import java.nio.file.Path;
 import java.util.Date;
 import java.util.UUID;
 
+import org.fkjava.commons.data.domain.Result;
 import org.fkjava.identity.domain.User;
 import org.fkjava.identity.util.UserHolder;
 import org.fkjava.storage.domain.FileInfo;
@@ -74,6 +77,42 @@ public class StorageServiceImpl implements StorageService{
 		}
 		
 		return page;
+	}
+
+	@Override
+	public FileInfo findById(String id) {
+		return this.storageRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	public InputStream getFileContent(FileInfo info) {
+		
+			try {
+				File file = new File(dir,info.getPath());
+				FileInputStream	in = new FileInputStream(file);
+				return in;
+			} catch (FileNotFoundException e) {
+				log.trace("文件没有找到" + e.getLocalizedMessage(),e);
+				return null;
+				
+			}
+			
+		
+		
+	}
+
+	@Override
+	public Result deleteFile(String id) {
+		//根据id查询数据
+		FileInfo info = this.storageRepository.findById(id).orElse(null);
+		if(info != null) {
+			//删除硬盘上的数据
+			File file = new File(dir,info.getPath());
+			file.delete();
+			//删除文件信息
+			this.storageRepository.delete(info);
+		}
+		return null;
 	}
 
 }
