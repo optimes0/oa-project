@@ -19,6 +19,7 @@
 		</div>
 		<div class="panel-body">
 			<div id="noticeContentEditor"></div>
+			<input type="hidden" name="content" id="noticeContent"/>
 		</div>
 	</div>
 </div>
@@ -27,6 +28,27 @@
     var E = window.wangEditor;
     var editor = new E('#noticeContentEditor');
     // 或者 var editor = new E( document.getElementById('editor') );
+    
+    // 隐藏网络图片引用tab
+    //editor.customConfig.showLinkImg = false;
+    
+    // 显示图片上传的tab
+    editor.customConfig.uploadImgServer = '${ctx}/storage/file/wangEditor';
+    // 上传的时候，文件的字段名
+    editor.customConfig.uploadFileName = 'file';
+    // 自定义上传的时候请求头内容
+    editor.customConfig.uploadImgHeaders = {
+   	    '${_csrf.headerName}': '${_csrf.token}'
+   	};
+    
+    // 接收改变后的内容，获取富文本编辑器里面的内容，放到#noticeContent里面
+    editor.customConfig.onchange = function(html){
+    	$("#noticeContent").val(html);
+    };
+    // 粘贴图片
+    editor.customConfig.pasteIgnoreImg = true;
+    // 不要过滤复制内容的样式，保持原本的样式，可能有些时候不能完全得到样式，此时可以自定义外观（写CSS）
+    editor.customConfig.pasteFilterStyle = false;
     
     // 创建编辑器
     editor.create();

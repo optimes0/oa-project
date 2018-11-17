@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.fkjava.commons.data.domain.Result;
 import org.fkjava.storage.domain.FileInfo;
@@ -55,14 +57,7 @@ public class StorageController {
 	//上传
 	@PostMapping
 	public String upload(@RequestParam("file")MultipartFile file) throws IOException {
-		FileInfo info = new FileInfo();
-		info.setName(file.getOriginalFilename());
-		info.setFileSize(file.getSize());
-		info.setContentType(file.getContentType());
-		
-		try(InputStream in = file.getInputStream()){
-			this.storageService.save(in,info);
-		}
+		this.wangEditorUpload(file);
 		return "redirect:/storage/file";
 	}
 	
@@ -133,5 +128,42 @@ public class StorageController {
 	public Result delete(@PathVariable("id")String id) {
 		
 		return this.storageService.deleteFile(id);
+	}
+	
+	@PostMapping("/wangEditor")
+	@ResponseBody
+	public WangEditorResponse wangEditorUpload(@RequestParam("file")MultipartFile file) throws IOException {
+		FileInfo info = new FileInfo();
+		info.setName(file.getOriginalFilename());
+		info.setFileSize(file.getSize());
+		info.setContentType(file.getContentType());
+		
+		try(InputStream in = file.getInputStream()){
+			this.storageService.save(in,info);
+		}
+		
+		WangEditorResponse wer = new WangEditorResponse();
+		wer.setError(0);//成功
+		wer.getData().add("/storage/file"+info.getId());//图片下载地址
+		return wer;
+	}
+	
+	public static class WangEditorResponse{
+		private int error;
+		private List<String> data = new LinkedList<>();
+		public int getError() {
+			return error;
+		}
+		public void setError(int error) {
+			this.error = error;
+		}
+		public List<String> getData() {
+			return data;
+		}
+		public void setData(List<String> data) {
+			this.data = data;
+		}
+		
+		
 	}
 }

@@ -59,7 +59,9 @@ public class StorageServiceImpl implements StorageService{
 		info.setUploadTime(new Date());
 		info.setPath(path);
 		
-		this.storageRepository.save(info);
+		FileInfo fi = this.storageRepository.save(info);
+		//吧id返回回去
+		info.setId(fi.getId());
 	}
 
 	@Override
