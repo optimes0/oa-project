@@ -10,7 +10,8 @@
 <link rel="stylesheet" href="${ctx }/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css"/>
 <script type="text/javascript" src="${ctx }/webjars/jquery/3.3.1/dist/jquery.min.js"></script>
 <script type="text/javascript" src="${ctx }/webjars/bootstrap/3.3.7/dist/js/bootstrap.min.js"></script>
-
+<link rel="stylesheet" href="${ctx }/static/css/fkjava.css">
+<script type="text/javascript" src="${ctx }/static/js/fkjava.js"></script>
 <link rel="stylesheet" href="${ctx }/static/css/layout.css"/>
 <%-- 把CSRF的验证码放到HTML头里面保存起来 --%>
 	<%-- 使用AJAX的时候，必须要设置请求头，请求头的内容从HTML头里面获取 --%>
@@ -42,7 +43,8 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">首页</a></li>
             <li><a href="#">设置</a></li>
-            <li><a href="#">个人</a></li>
+            <!-- authentication认证的意思，principal首要的意思 -->
+            <li><a href="#">${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.principal.name }</a></li>
             <li><a href="#">帮助</a></li>
             <li><a href="#" onclick="$('#logout').submit()">退出</a></li>
           </ul>
@@ -51,8 +53,8 @@
 				name="${_csrf.parameterName}"
 				value="${_csrf.token}"/>
           </form>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
+          <form class="navbar-form navbar-right" method="get" action="">
+            <input type="text" class="form-control" placeholder="输入关键字,按回车搜索" name="keyword" vale="${param.keyword }">
           </form>
         </div>
       </div>

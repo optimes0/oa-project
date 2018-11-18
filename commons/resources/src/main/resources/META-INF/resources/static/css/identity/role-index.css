@@ -1,11 +1,11 @@
 @charset "UTF-8";
-.role:hover
+.role:hover, .types:hover
 {
 	background: #aaa;
 	cursor: pointer;
 }
 
-.role-form
+.role-form, .type-form
 {
 	border-left: 1px solid #eee;
 	padding-bottom: 10px;
@@ -15,3 +15,4 @@
 {
 	background: #aaa;
 }
+
