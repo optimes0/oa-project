@@ -41,4 +41,5 @@ public class NoticeTypeController {
 		this.noticeService.delete(id);
 		return "ok";
 	}
+	
 }

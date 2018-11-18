@@ -143,19 +143,19 @@ public class StorageController {
 		}
 		
 		WangEditorResponse wer = new WangEditorResponse();
-		wer.setError(0);//成功
-		wer.getData().add("/storage/file"+info.getId());//图片下载地址
+		wer.setErrno(0);//成功
+		wer.getData().add("/storage/file/"+info.getId());//图片下载地址
 		return wer;
 	}
 	
 	public static class WangEditorResponse{
-		private int error;
+		private int errno;
 		private List<String> data = new LinkedList<>();
-		public int getError() {
-			return error;
+		public int getErrno() {
+			return errno;
 		}
-		public void setError(int error) {
-			this.error = error;
+		public void setErrno(int errno) {
+			this.errno = errno;
 		}
 		public List<String> getData() {
 			return data;

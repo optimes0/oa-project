@@ -2,11 +2,13 @@ package org.fkjava.notice.controller;
 
 import java.util.List;
 
+import org.fkjava.notice.domain.Notice;
 import org.fkjava.notice.domain.NoticeType;
 import org.fkjava.notice.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,5 +35,11 @@ public class NoticeController {
 		List<NoticeType> types = this.noticeService.findAll();
 		mav.addObject("types",types);
 		return mav;
+	}
+	
+	@PostMapping
+	public String saveNotice(Notice notice) {
+		this.noticeService.write(notice);
+		return "redirect:/notice";
 	}
 }

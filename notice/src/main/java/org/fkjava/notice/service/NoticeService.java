@@ -2,6 +2,7 @@ package org.fkjava.notice.service;
 
 import java.util.List;
 
+import org.fkjava.notice.domain.Notice;
 import org.fkjava.notice.domain.NoticeType;
 
 public interface NoticeService {
@@ -11,5 +12,8 @@ public interface NoticeService {
 	List<NoticeType> findAll();
 
 	void delete(String id);
+
+	void write(Notice notice);
+
 
 }
