@@ -43,6 +43,20 @@ public class NoticeRead implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="notice_id")
 	private Notice notice;
+	
+	
+	public NoticeRead() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public NoticeRead(String id, Date readTime, Notice notice) {
+		super();
+		this.id = id;
+		this.readTime = readTime;
+		this.notice = notice;
+	}
+	
 	public String getId() {
 		return id;
 	}

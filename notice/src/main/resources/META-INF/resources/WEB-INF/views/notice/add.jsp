@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>发布公告</title>
+<link rel="stylesheet" href="${ctx }/static/css/fkjava.css">
 </head>
 <body>
 <div class="container-fluid">
@@ -33,12 +34,12 @@
 				<select class="btn btn-default" id="select" name="type.id" required="required">
 					<option>请选择公告类型</option>
 					<c:forEach items="${types }" var="t">
-					<option value="${t.id }" ${notice.type.id eq t.id? 'select':'' }>${t.name }</option>
+					<option value="${t.id }" ${notice.type.id eq t.id? 'selected="selected"':'' }>${t.name }</option>
 					</c:forEach>
 				</select>
-				<div class="" id="noticeContentEditor"></div>
-				<input type="hidden" name="content" id="noticeContent"/>
-				<button class="btn btn-default">发布</button>
+				<div class="" id="noticeContentEditor">${notice.content }</div>
+				<textarea name="content" id="noticeContent" style="display: none">${notice.content }</textarea>
+				<button class="btn btn-default">保存</button>
 			</form>
 			
 			
@@ -72,7 +73,7 @@
         	$("#noticeContent").val(html);
         };
         // 粘贴图片
-        editor.customConfig.pasteIgnoreImg = true;
+        editor.customConfig.pasteIgnoreImg = false;
         // 不要过滤复制内容的样式，保持原本的样式，可能有些时候不能完全得到样式，此时可以自定义外观（写CSS）
         editor.customConfig.pasteFilterStyle = false;
         
