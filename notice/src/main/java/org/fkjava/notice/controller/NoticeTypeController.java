@@ -24,21 +24,22 @@ public class NoticeTypeController {
 	@GetMapping
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView("notice/type/index");
-		List<NoticeType> types = this.noticeService.findAll();
+		List<NoticeType> types = this.noticeService.findAllTypes();
 		mav.addObject("types", types);
 		return mav;
 	}
 	
 	@PostMapping
 	public String save(NoticeType type) {
-		this.noticeService.save(type);
+		this.noticeService.saveType(type);
 		return "redirect:/notice/type";
 	}
 	
 	@DeleteMapping("{id}")
 	@ResponseBody
 	public String delete(@PathVariable("id")String id) {
-		this.noticeService.delete(id);
+		this.noticeService.deleteType(id);
 		return "ok";
 	}
+	
 }
