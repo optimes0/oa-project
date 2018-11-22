@@ -12,14 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/menu")
+@SessionAttributes("menuJson")
 public class MenuController {
 	
 	@Autowired
@@ -62,9 +65,9 @@ public class MenuController {
 	
 	@GetMapping(path="menus", produces="application/JSON")
 	@ResponseBody
-	public List<Menu> findMyMenu(){
+	public String findMyMenu(@ModelAttribute("menuJson")String menuJson){
 		//找到当前用户的菜单
 		//TODO 暂时没有用户，先直接查询所有
-		return this.menuService.findMyMenus();
+		return menuJson;
 	}
 }

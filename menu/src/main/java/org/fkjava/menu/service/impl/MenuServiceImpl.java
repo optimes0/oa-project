@@ -210,11 +210,12 @@ public class MenuServiceImpl implements MenuService{
 	 * 根据角色权限查找对应的菜单
 	 */
 	@Override
-	public List<Menu> findMyMenus() {
+	@Transactional(readOnly=true)
+	public List<Menu> findMyMenus(String userId) {
 		//从线程里得到User不是持久化的
-		User user = UserHolder.get();
+//		User user = UserHolder.get();
 		//根据id查找持久化的User
-		user = this.userDao.getOne(user.getId());
+		User user = this.userDao.getOne(userId);
 		//得到所有的角色
 		List<Role> roles = user.getRoles();
 		
@@ -290,4 +291,19 @@ public class MenuServiceImpl implements MenuService{
 		menu.setChilds(new LinkedList<>());
 		return menu;
 	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public Set<String> findMyUrls(String userId) {
+		User user = this.userDao.getOne(userId);
+		List<Role> roles = user.getRoles();
+		List<Menu> menus = this.menuDao.findDistinctByRolesIn(roles);
+		
+		Set<String> urls = new HashSet<>();
+		menus.forEach(m -> {
+			urls.add(m.getUrl());
+		});
+		return urls;
+	}
+	
 }

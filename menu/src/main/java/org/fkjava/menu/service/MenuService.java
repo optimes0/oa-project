@@ -1,6 +1,7 @@
 package org.fkjava.menu.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.fkjava.commons.data.domain.Result;
 import org.fkjava.menu.domain.Menu;
@@ -15,6 +16,10 @@ public interface MenuService {
 
 	Result remove(String id);
 
-	List<Menu> findMyMenus();
+	
+
+	Set<String> findMyUrls(String userId);
+
+	List<Menu> findMyMenus(String userId);
 
 }
