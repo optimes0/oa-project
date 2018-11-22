@@ -14,12 +14,13 @@ import org.fkjava.menu.service.MenuService;
 import org.fkjava.security.domain.UserDetails;
 import org.fkjava.security.interceptor.UserHolderInterceptor;
 import org.fkjava.security.service.SecurityService;
+import org.fkjava.security.service.impl.MyAccessControl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -122,10 +123,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 		};
 		
 		http.authorizeRequests()//验证请求
-			.antMatchers(loginPage,"/css/**","/js/**","/webjars/**","/static/**")
+			.antMatchers(loginPage,"/","/error/**","/zTree/**","/css/**",
+						"/js/**","/webjars/**","/static/**","/menu/menus","/favicon.ico")
 			.permitAll()//不做访问判断
 			.anyRequest()//所有请求
-			.authenticated()//授权后才能访问
+			.access("@myAccessControl.check(authentication,request)")//自定义检查用户是否有权限访问
+//			.authenticated()//授权后才能访问
 			.and()//并且
 			.formLogin()//使用表单登录
 			.loginPage(loginPage)//登录页面位置，默认是/login
@@ -156,6 +159,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 		registry.addViewController("/").setViewName("security/index");
 		
 	}
+	
+	@Bean
+	public MyAccessControl myAccessControl() {
+		return new MyAccessControl();
+	} 
 
 	public static void main(String[] args) {
 		SpringApplication.run(SecurityConfig.class, args);
