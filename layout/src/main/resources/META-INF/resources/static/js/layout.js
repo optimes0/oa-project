@@ -31,9 +31,31 @@ $(function(){
 						$(html).appendTo($("#left-sidebar"));
 					}
 				})
+				
+				//高亮显示菜单
+				//1，获取当前url
+				var url = document.location.pathname;
+				//2,获取所有的url链接
+				var list = $(".nav-sidebar li");
+				//排序
+				list.sort(function(li1,li2){
+					//长度优先，长的放前面
+					return $("a",li2).attr("href").length - $("a",li2).attr("href").length;
+				})
+				//给匹配的URL的li加上class='active'
+				$(list).each(function(index,li){
+					var href = $("a",$(li)).attr("href");
+					if(url.startsWith(href)){
+						$(li).addClass("active");
+						
+					}
+				})
 			},
 			error: function(data,status,xhr){
 				alert(data.responseJSON.message);
 			}
 		})
+		
+		
+		
 	})
