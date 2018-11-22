@@ -1,5 +1,6 @@
 package org.fkjava.identity.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.fkjava.identity.domain.Role;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -90,5 +92,64 @@ public class UserController {
 	public String disable(@PathVariable("id")String id) {
 		this.identityService.disable(id);
 		return "redirect:/identity/user";
+	}
+	
+	@GetMapping(produces="application/json")
+	@ResponseBody
+	public AutoCompleteResponse likeName(@RequestParam(name="query")String keyword) {
+		List<User> users = this.identityService.findUsers(keyword);
+		
+		List<User> result = new LinkedList<>();
+		users.forEach(user -> {
+			User u = new User();
+			u.setId(user.getId());
+			u.setName(user.getName());
+			result.add(u);
+		});
+		return new AutoCompleteResponse(result); 
+	}
+	/***
+	 * 自动完成响应的对象
+	 * @author zero
+	 *
+	 */
+	public static class AutoCompleteResponse{
+		private List<AutoCompleteItem> suggestions;
+		
+	    public AutoCompleteResponse(List<User> users) {
+			super();
+			this.suggestions = new LinkedList<>();
+			users.forEach(u -> {
+				AutoCompleteItem item = new AutoCompleteItem(u);
+				this.suggestions.add(item);
+			});
+		}
+
+		public List<AutoCompleteItem> getSuggestions() {
+			return suggestions;
+		}
+
+		
+	    
+	}
+	
+	public static class AutoCompleteItem{
+		private User user;
+		private String value;
+		
+		
+		public AutoCompleteItem(User user) {
+			super();
+			this.user = user;
+			this.value = user.getName();
+		}
+		public User getUser() {
+			return user;
+		}
+		public String getValue() {
+			return value;
+		}
+		
+		
 	}
 }

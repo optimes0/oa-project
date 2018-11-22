@@ -1,5 +1,6 @@
 package org.fkjava.identity.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.fkjava.identity.domain.User;
@@ -18,5 +19,7 @@ public interface IdentityService {
 	void disable(String id);
 
 	Optional<User> findByLoginName(String username);
+
+	List<User> findUsers(String keyword);
 
 }

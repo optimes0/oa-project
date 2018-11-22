@@ -42,5 +42,6 @@
 		<module>security</module>
 		<module>storage</module>
 		<module>notice</module>
+		<module>human-resources</module>
 	</modules>
 </project>

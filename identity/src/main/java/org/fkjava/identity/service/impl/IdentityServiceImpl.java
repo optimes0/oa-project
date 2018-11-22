@@ -125,22 +125,7 @@ public class IdentityServiceImpl implements IdentityService {
 
 	@Override
 	public Page<User> findUsers(String keyword, Integer number) {
-		//检查是否有关键字，没有则设为空
-		if(StringUtils.isEmpty(keyword)) {
-			keyword = null;
-		}
-		
-		//分页条件
-		Pageable pageable = PageRequest.of(number, 4);
-		Page<User> page;
-		if(keyword == null) {
-			//如果没有关键字，则分页查找所有的数据
-			page = this.userDao.findAll(pageable);
-		}else {
-			//如果有关键字，则根据关键字进行模糊分页查询
-			page = this.userDao.findByNameContaining(keyword,pageable);
-		}
-		return page;
+		return this.findUsers(keyword, number, 4);
 	}
 
 	@Override
@@ -187,6 +172,31 @@ public class IdentityServiceImpl implements IdentityService {
 		User user = this.userDao.findByLoginName(username);
 		Optional<User> op = Optional.ofNullable(user);
 		return op;
+	}
+
+	@Override
+	public List<User> findUsers(String keyword) {
+		Page<User> page = this.findUsers(keyword, 0, 50);
+		return page.getContent();
+	}
+	
+	private Page<User> findUsers(String keyword,Integer number,Integer size){
+		//检查是否有关键字，没有则设为空
+		if(StringUtils.isEmpty(keyword)) {
+			keyword = null;
+		}
+		
+		//分页条件
+		Pageable pageable = PageRequest.of(number, size);
+		Page<User> page;
+		if(keyword == null) {
+			//如果没有关键字，则分页查找所有的数据
+			page = this.userDao.findAll(pageable);
+		}else {
+			//如果有关键字，则根据关键字进行模糊分页查询
+			page = this.userDao.findByNameContaining(keyword,pageable);
+		}
+		return page;
 	}
 
 }
